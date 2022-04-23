@@ -1,0 +1,111 @@
+<div class="limiter">
+  <div class="container-login100">
+    <div class="wrap-login100">
+
+      <div class="login100-pic js-tilt" data-tilt>
+        <img src="../../assets/images/img-01.png" alt="IMG">
+      </div>
+
+      <form class="login100-form validate-form" (ngSubmit)="submitinscription(form)" #form="ngForm">
+
+        <span class="login100-form-title">
+         Inscription
+        </span>
+
+        <div class="wrap-input100 validate-input" data-validate = "Veuillez renseigner votre nom">
+          <input class="input100" type="text" ngModel name="nom" placeholder="Nom">
+          <span class="focus-input100"></span>
+          <span class="symbol-input100">
+            <i class="fa fa-envelope" aria-hidden="true"></i>
+          </span>
+        </div>
+
+        <div class="wrap-input100 validate-input" data-validate = "Veuillez renseigner votre prénom">
+          <input class="input100" type="text" ngModel name="prenom" placeholder="Prenoms(s)">
+          <span class="focus-input100"></span>
+          <span class="symbol-input100">
+            <i class="fa fa-envelope" aria-hidden="true"></i>
+          </span>
+        </div>
+
+        <div class="wrap-input100 validate-input" data-validate = "veuillez renseigner une email valide: ex@abc.xyz">
+          <input class="input100" type="text" ngModel name="email" placeholder="Email">
+          <span class="focus-input100"></span>
+          <span class="symbol-input100">
+            <i class="fa fa-envelope" aria-hidden="true"></i>
+          </span>
+        </div>
+
+        <br>
+
+        <div class="wrap-input100 validate-input">
+          <a [hidden]="!choix" (click)="activate()" class="voirplus">
+            Personnaliser?
+          </a>
+          <a [hidden]="!personnalisation" (click)="desactivate()" class="voirplus">
+            Choisir?
+          </a>
+          <select [hidden]="!choix"  value="Enseignant" class="select100" ngModel name="profession" placeholder="profession">
+            <option value="Enseignant">
+                  Enseignant
+            </option>
+            <option value="Autres">
+            OOO
+            </option>
+          </select>
+          <input [hidden]="!personnalisation" class="input100" type="text" ngModel name="profession" placeholder="Votre Profession?">
+        </div>
+
+        <div class="wrap-input100 validate-input" data-validate = "votre numero de telephone">
+          <input class="input100" type="text" ngModel name="numero" placeholder="Nulmero">
+          <span class="focus-input100"></span>
+          <span class="symbol-input100">
+            <i class="fa fa-phone" aria-hidden="true"></i>
+          </span>
+        </div>
+
+
+        <div class="wrap-input100 validate-input" data-validate = "Le mot de passe est obligatoire">
+          <input class="input100" type="password" ngModel name="password" placeholder="Mot de passe">
+          <span class="focus-input100"></span>
+          <span class="symbol-input100">
+            <i class="fa fa-lock" aria-hidden="true"></i>
+          </span>
+        </div>
+
+        <div class="wrap-input100 validate-input" data-validate = "Veuillez confirmer votre mot de passe">
+          <input class="input100" type="password" ngModel name="confirm_password" placeholder="Confirmer Mot de passe">
+          <span class="focus-input100"></span>
+          <span class="symbol-input100">
+            <i class="fa fa-lock" aria-hidden="true"></i>
+          </span>
+        </div>
+
+        <div class="container-login100-form-btn">
+          <button type="submit" class="login100-form-btn">
+            Inscription
+          </button>
+        </div>
+
+        <br>
+
+        <div class="text-center p-t-136">
+
+          <a routerLink="/" class="txt2" href="#">
+            Acceuil
+            <i class="fa fa-home m-l-5" aria-hidden="true"></i>
+          </a>
+
+          <br>
+
+          <a routerLink="/login" class="txt2" href="#">
+           Se connecter
+            <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+          </a>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+
