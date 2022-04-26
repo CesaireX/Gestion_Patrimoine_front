@@ -10,15 +10,28 @@ import {FrontservicesService} from '../services/frontservices.service'
 })
 export class AcceuilComponent implements OnInit {
 public username: any;
+connected= false;
   constructor(private router: Router, private Utilisateurservice: FrontservicesService) { }
 
   ngOnInit(): void {
-this.getusername();
+     this.getusername();
   }
 
   getusername(){
-    this.Utilisateurservice.getUsername().subscribe(data=>{
-      this.username=data;
-    })
+    this.username=localStorage.getItem('identifiant');
+    if(this.username!=null)
+    {
+      this.connected=true;
+    }
+    console.log(this.connected)
   }
+
+  deconnexion(){
+
+    localStorage.removeItem('user_name');
+
+    this.router.navigate(['/login']);
+
+}
+
 }

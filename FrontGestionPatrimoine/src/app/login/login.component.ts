@@ -28,7 +28,7 @@ public user:any;
       {
       console.log(data);
       localStorage.setItem('identifiant',this.user);
-      this.router.navigateByUrl('/acceuil');
+      this.router.navigateByUrl('/');
       }
     })
   }

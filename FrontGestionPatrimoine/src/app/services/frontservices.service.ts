@@ -28,9 +28,7 @@ export class FrontservicesService{
 
   getUsername() {
     this.username=localStorage.getItem('identifiant');
-    console.log(this.username);
-    return this.httpClient.get('http://127.0.0.1:8000/api/getUsers',{params: new HttpParams().set('email',this.username)});
-
+    return this.username;
   }
 
 }
