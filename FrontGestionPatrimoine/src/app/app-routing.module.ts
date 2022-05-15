@@ -4,12 +4,16 @@ import { LoginComponent } from './login/login.component';
 import { InscriptionsComponent } from './inscriptions/inscriptions.component';
 import { HomeComponent } from './home/home.component';
 import { AcceuilComponent } from './acceuil/acceuil.component';
+import { AddpatrimoineComponent } from './addpatrimoine/addpatrimoine.component';
+import { ListepatrimoinesComponent } from './listepatrimoines/listepatrimoines.component';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
+  { path: '', component: LoginComponent },
   { path: 'home', component: HomeComponent },
   { path: 'inscription', component: InscriptionsComponent },
-  { path: '', component: AcceuilComponent }
+  { path: 'acceuil', component: AcceuilComponent },
+  { path: 'addpatrimoine', component: AddpatrimoineComponent },
+  { path: 'listepatrimoine', component: ListepatrimoinesComponent },
 ];
 
 @NgModule({

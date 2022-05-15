@@ -34,13 +34,12 @@
                     <li><a routerLink="/inscription">S'inscrire!</a></li>
                       </div>
 
-                  <div *ngIf="connected">
-								<li><a >Acceuil</a></li>
-								<li><a >Autour de moi</a></li>
-								<li><a >Carte des points à voir</a></li>
-								<li><a >Les communes</a></li>
+								<li  *ngIf="connected"><a href="#" >Acceuil</a></li>
+								<li  *ngIf="connected"><a href="#" >Autour de moi</a></li>
+								<li  *ngIf="connected"><a href="#">Carte des points à voir</a></li>
+								<li  *ngIf="connected"><a href="#">Les communes</a></li>
 
-							    <li class="dropdown">
+							    <li *ngIf="connected" class="dropdown">
 							      <a class="dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
 							        Profil
 							      </a>
@@ -49,29 +48,52 @@
 							        <a class="dropdown-item" href="#" (click)="deconnexion()">Deconnexion</a>
 							      </div>
 							    </li>
-
-                  </div>
 						    </ul>
 						  </div>
 					</div>
 				</nav>
 			</header>
 
-			<section class="banner-area relative" id="home" data-parallax="scroll" data-image-src="/assets/img2/burkina.jpg">
-				<div class="overlay-bg overlay"></div>
-				<div class="container">
-					<div class="row fullscreen  d-flex align-items-center justify-content-end">
-						<div class="banner-content col-lg-2 col-md-6">
-							<h1>
-								AGENDA<br>
-								<span>DU PATRIMOINE</span>
-							</h1>
-              <p style="color: white">Decouvrez toutes les portes ouvertes, visites </p>
-							<a href="#" class="primary-btn2 header-btn text-uppercase">Ajouter un patrimoine!</a>
-						</div>
-					</div>
-				</div>
-			</section>
+      <section id="hero" class="d-flex align-items-center">
+
+        <div class="container-fluid" data-aos="zoom-out" data-aos-delay="100">
+          <div class="row justify-content-center">
+            <div class="col-xl-10">
+              <div class="row">
+                <div class="banner-content col-lg-2 col-md-6">
+                  <h1>
+                    AGENDA<br>
+                    <span>DU PATRIMOINE</span>
+                  </h1>
+                  <p style="color: white">Decouvrez toutes les portes ouvertes, visites </p>
+                  <a *ngIf="connected" routerLink="/addpatrimoine" class="primary-btn2 header-btn text-uppercase">Ajouter un patrimoine!</a><br><br><br>
+                  <a routerLink="/listepatrimoine" class="primary-btn2 header-btn text-uppercase">Liste des patrimoines</a>
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+
+    <div class="modal-content">
+
+      <agm-map [latitude]="latitude" [longitude]="longitude" (mapClick)="addMarker($event.coords.lat, $event.coords.lng)">
+        <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true"
+          (dragEnd)="markerDragEnd($event)"></agm-marker>
+      </agm-map>
+
+      <h5>Address: {{address}}</h5>
+      <div>Latitude: {{latitude}}</div>
+      <div>Longitude: {{longitude}}</div>
+
+    </div>
+  </div>
+</div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
 
       <footer>
 

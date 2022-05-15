@@ -1,43 +1,82 @@
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+<head>
+  <meta charset="UTF-8">
+
+  <title>Patrimoine</title>
+
+    <link rel="stylesheet" href="/assets/css2/linearicons.css">
+    <link rel="stylesheet" href="/assets/css2/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/css2/jquery.DonutWidget.min.css">
+    <link rel="stylesheet" href="/assets/css2/bootstrap.css">
+    <link rel="stylesheet" href="/assets/css2/owl.carousel.css">
+    <link type="text/css" rel="stylesheet" href="/assets/css2/main.css">
+
+
+    <script data-require="angular.js@1.4.x" src="https://code.angularjs.org/1.4.12/angular.js" data-semver="1.4.9"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  </head>
+  <body>
 <div class="limiter">
   <div class="container-login100">
     <div class="wrap-login100">
 
       <div class="login100-pic js-tilt" data-tilt>
-        <img src="../../assets/images/img-01.png" alt="IMG">
+        <img src="../../assets/img2/patrimoine4.jpg" alt="IMG">
       </div>
 
-      <form class="login100-form validate-form" (ngSubmit)="submitLogin(form)" #form="ngForm">
-        <span class="login100-form-title">
-          Connexion
+      <form [formGroup]="form" (ngSubmit)="submitLogin2()" novalidate>
+        <span class="acceuil">
+          PATRIMOINES
         </span>
 
-        <div class="wrap-input100 validate-input" data-validate = "renseignez un email valide: ex@abc.xyz">
-          <input class="input100" type="text" ngModel name="email" placeholder="Email">
-          <span class="focus-input100"></span>
-          <span class="symbol-input100">
-            <i class="fa fa-envelope" aria-hidden="true"></i>
-          </span>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Entrez votre email</mat-label>
+          <input matInput placeholder="pat@example.com" formControlName="email" [ngClass]="{ 'is-invalid': submitted && form.controls['email'].errors }" [ngClass]="{ 'is-valid': submitted && form.controls['email'].valid}" required>
+        </mat-form-field>
+        <div *ngIf="submitted && form.controls['email'].errors" class="text-danger">
+          <div *ngIf="form.controls['email'].errors['required']">Obligatoire</div>
         </div>
 
-        <div class="wrap-input100 validate-input" data-validate = "le mot de passe est obligatoire">
-          <input class="input100" type="password" ngModel name="password" placeholder="Mot de passe">
-          <span class="focus-input100"></span>
-          <span class="symbol-input100">
-            <i class="fa fa-lock" aria-hidden="true"></i>
-          </span>
+        <br><br>
+
+        <mat-form-field>
+          <input matInput placeholder="Mot de passe" [type]="hide ? 'password' : 'text'" formControlName="password" [ngClass]="{ 'is-invalid': submitted && form.controls['password'].errors }" [ngClass]="{ 'is-valid': submitted && form.controls['password'].valid}" required>
+          <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </mat-form-field>
+        <div *ngIf="submitted && form.controls['password'].errors" class="text-danger">
+          <div *ngIf="form.controls['password'].errors['required']">Obligatoire</div>
         </div>
 
-        <div class="container-login100-form-btn">
-          <button class="login100-form-btn">
-            Connexion
-          </button>
+<!--
+        <div style="margin-top: -30px;" class="form-group">
+          <label style="font-family: bold;" for="usr"><strong><i class="fa fa-envelope" aria-hidden="true"></i> Email</strong></label>
+          <input placeholder="email" ngModel name="email" type="text" class="form-control" id="usr" required minlength="4">
         </div>
+
+        <div class="form-group">
+          <label style="font-family: bold;" for="usr"><strong><i class="fa fa-lock" aria-hidden="true"></i> Mot de passe</strong></label>
+          <input required="required" placeholder="Mot de passe" ngModel name="password" type="password" class="form-control" id="usr" required minlength="1">
+        </div>
+
+
+        <br><br><br><br><br><br>
+-->
+
+<div style="text-align: center;" *ngIf="!verification" class="text-danger">
+  <div *ngIf="!verification">Mauvais email ou mauvais mot de passe</div>
+</div>
+
+        <button type="submit" class="subscribe btn btn-success btn-block rounded-pill shadow-sm">Se connecter</button>
 
         <div class="text-center p-t-12">
-          <span class="txt1">
+          <span>
             Avez vous oublier
           </span>
-          <a class="txt2" href="#">
+          <a href="#">
             Email / Mot de passe?
           </a>
         </div>
@@ -46,7 +85,7 @@
 
         <div class="text-center p-t-136">
 
-          <a routerLink="/" class="txt2" href="#">
+          <a routerLink="/acceuil" class="txt2" href="#">
             Acceuil
             <i class="fa fa-home m-l-5" aria-hidden="true"></i>
           </a>
@@ -64,3 +103,6 @@
   </div>
 </div>
 
+
+</body>
+</html>

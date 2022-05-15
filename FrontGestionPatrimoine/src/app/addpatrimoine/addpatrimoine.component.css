@@ -1,7 +1,3 @@
-p {
-  font-family: Lato;
-}
-
 agm-map {
   height: 300px;
 }
@@ -475,8 +471,4 @@ agm-map {
   border: 1px solid #ccc;
   margin-left: -5px;
   margin-right: -5px;
-}
-
-.mat-form-field{
-  width:365px !important;
 }
