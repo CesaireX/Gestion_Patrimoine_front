@@ -164,10 +164,8 @@
               </div>
             </div>
 
-
-
-            <mat-form-field>
-              <mat-label>Echeance de realisation</mat-label>
+            <mat-form-field appearance="fill">
+              <mat-label>Entrez la date de debut et de fin</mat-label>
               <mat-date-range-input [formGroup]="echeancepat" [rangePicker]="picker" required>
                 <input matStartDate formControlName="start" placeholder="debut">
                 <input matEndDate formControlName="end" placeholder="Fin">
@@ -175,7 +173,9 @@
               <mat-hint>MM/JJ/AAAA – MM/JJ/AAAA</mat-hint>
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-date-range-picker #picker></mat-date-range-picker>
+
             </mat-form-field>
+
 
             <h2>
               Start: {{echeancepat.value.start | date}}
@@ -215,16 +215,16 @@ Titre du site -->
             </div>
 
 
-            <div class="form-group" style="visibility: hidden;">
+            <div class="form-group">
               <label for="inputEstimatedBudget">latitude</label>
               <input [(ngModel)]="latitude" type="any" step="any" id="lat" class="form-control" formControlName="lat">
               <input value="{{username}}" [(ngModel)]="username" type="any" step="any" id="idUser" class="form-control" formControlName="idUser">
             </div>
-            <div style="visibility: hidden;" class="form-group">
+            <div class="form-group">
               <label for="inputSpentBudget">Longitude</label>
               <input [(ngModel)]="longitude" type="any" step="any" id="lng" class="form-control" formControlName="lng">
             </div>
-            <button class="alert alert-danger" style="margin-top: -160px;" type="submit" class="subscribe btn btn-primary btn-block rounded-pill shadow-sm">Ajouter votre patrimoine</button>
+            <button class="alert alert-danger" type="submit" class="subscribe btn btn-primary btn-block rounded-pill shadow-sm">Ajouter votre patrimoine</button>
 
           </form>
         </div>

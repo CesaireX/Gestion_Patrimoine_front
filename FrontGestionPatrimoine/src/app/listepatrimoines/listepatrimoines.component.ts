@@ -12,7 +12,7 @@ export class ListepatrimoinesComponent implements OnInit {
   connected= false;
   public username: any;
   patrimoine: any;
-  imagepath:any= 'http://127.0.0.1:8000/storage/app/'
+  imagepath:any= 'http://127.0.0.1:8000/api/images/';
   constructor(private router:Router, private Utilisateurservice:FrontservicesService) { }
 
   ngOnInit(): void {
@@ -34,6 +34,7 @@ getusername(){
   }
   console.log(this.connected)
 }
+
 
 getpatrimoines(){
   this.Utilisateurservice.getpatrimoines().subscribe(data=>{

@@ -20,6 +20,7 @@ import { AcceuilComponent } from './acceuil/acceuil.component';
 import { AgmCoreModule } from '@agm/core';
 import { AddpatrimoineComponent } from './addpatrimoine/addpatrimoine.component';
 import { ListepatrimoinesComponent } from './listepatrimoines/listepatrimoines.component';
+
 const routes: Routes = [
   { path: 'login', component: LoginComponent }
 ];
@@ -35,7 +36,7 @@ const routes: Routes = [
     ListepatrimoinesComponent,
   ],
   imports: [
-    BrowserModule, HttpClientModule, RouterModule.forRoot(routes),ReactiveFormsModule,MatNativeDateModule,MatDatepickerModule,MatInputModule,
+    BrowserModule ,HttpClientModule, RouterModule.forRoot(routes),ReactiveFormsModule,MatNativeDateModule,MatDatepickerModule,MatInputModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAosX1kf5h0myKulz8AF9sDKxtMlI69Sko',
       libraries: ['places']

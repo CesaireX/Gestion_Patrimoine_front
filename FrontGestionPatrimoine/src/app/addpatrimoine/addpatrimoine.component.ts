@@ -15,38 +15,11 @@ import {
 } from '@angular/material/datepicker';
 import { combineLatest } from 'rxjs';
 
-@Injectable()
-export class FiveDayRangeSelectionStrategy<D> implements MatDateRangeSelectionStrategy<D> {
-  constructor(private _dateAdapter: DateAdapter<D>) {}
-
-  selectionFinished(date: D | null): DateRange<D> {
-    return this._createFiveDayRange(date);
-  }
-
-  createPreview(activeDate: D | null): DateRange<D> {
-    return this._createFiveDayRange(activeDate);
-  }
-
-  private _createFiveDayRange(date: D | null): DateRange<D> {
-    if (date) {
-      const start = this._dateAdapter.addCalendarDays(date, -2);
-      const end = this._dateAdapter.addCalendarDays(date, 2);
-      return new DateRange<D>(start, end);
-    }
-
-    return new DateRange<D>(null, null);
-  }
-}
-
 @Component({
   selector: 'app-addpatrimoine',
   templateUrl: './addpatrimoine.component.html',
   styleUrls: ['./addpatrimoine.component.css'],
   providers: [
-    {
-      provide: MAT_DATE_RANGE_SELECTION_STRATEGY,
-      useClass: FiveDayRangeSelectionStrategy,
-    },
   ],
 })
 export class AddpatrimoineComponent implements OnInit {
@@ -212,7 +185,7 @@ addMarker(lat: number, lng: number) {
    formdata.append("lat", this.form.controls['lat'].value);
    formdata.append("lng", this.form.controls['lng'].value);
    formdata.append("idUser", this.form.controls['idUser'].value);
-   formdata.append("echeancepat", this.echeancepat.value.start+ '-' +this.echeancepat.value.end);
+   formdata.append("echeancepat", this.echeancepat.value.start.toUTCString()+ '-' +this.echeancepat.value.end.toUTCString());
 
    const httpOptions={
      headers: new HttpHeaders({
