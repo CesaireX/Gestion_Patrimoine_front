@@ -34,7 +34,7 @@
             <div class="collapse navbar-collapse justify-content-end align-items-center" id="navbarSupportedContent">
               <ul class="navbar-nav">
 
-                <li  *ngIf="connected"><a href="#" >Acceuil</a></li>
+                <li  *ngIf="connected"><a href="/acceuil" >Acceuil</a></li>
 								<li  *ngIf="connected"><a href="#" >Autour de moi</a></li>
 								<li  *ngIf="connected"><a href="#">Carte des points à voir</a></li>
 								<li  *ngIf="connected"><a href="#">Les communes</a></li>
@@ -44,7 +44,7 @@
                     Profil
                   </a>
                   <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#" >Consulter votre profil</a>
+                    <a class="dropdown-item" routerLink="/profil" >Consulter votre profil</a>
                     <a class="dropdown-item" href="#" (click)="deconnexion()">Deconnexion</a>
                   </div>
                 </li>
@@ -120,6 +120,7 @@
               <div class="form-group col-md-6">
                 <label for="exampleInputFile">Image</label>
                 <div class="input-group">
+
                     <input type="file" formControlName="imgpat" class="form-control" for="exampleInputFile" (change)="handeFileInput($event)" [ngClass]="{ 'is-invalid': submitted && form.controls['imgpat'].errors }" [ngClass]="{ 'is-valid': submitted && form.controls['imgpat'].valid}" required/>
                 </div>
                 <div *ngIf="submitted && form.controls['imgpat'].errors" class="text-danger">
@@ -215,16 +216,16 @@ Titre du site -->
             </div>
 
 
-            <div class="form-group">
+            <div class="form-group" style="visibility: hidden;">
               <label for="inputEstimatedBudget">latitude</label>
               <input [(ngModel)]="latitude" type="any" step="any" id="lat" class="form-control" formControlName="lat">
               <input value="{{username}}" [(ngModel)]="username" type="any" step="any" id="idUser" class="form-control" formControlName="idUser">
             </div>
-            <div class="form-group">
+            <div class="form-group" style="visibility: hidden;">
               <label for="inputSpentBudget">Longitude</label>
               <input [(ngModel)]="longitude" type="any" step="any" id="lng" class="form-control" formControlName="lng">
             </div>
-            <button class="alert alert-danger" type="submit" class="subscribe btn btn-primary btn-block rounded-pill shadow-sm">Ajouter votre patrimoine</button>
+            <button style="margin-top: -160px;" class="alert alert-danger" type="submit" class="subscribe btn btn-primary btn-block rounded-pill shadow-sm">Ajouter votre patrimoine</button>
 
           </form>
         </div>

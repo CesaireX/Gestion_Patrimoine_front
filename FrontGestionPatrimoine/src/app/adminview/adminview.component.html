@@ -62,15 +62,14 @@
 
 
 
-
     <section id="team" class="team section-bg">
       <div class="container" data-aos="fade-up">
         <div class="section-title">
           <h2 style="color: rgb(0, 0, 0);">PATRIMOINES</h2>
-          <p style="color: rgb(0, 0, 0);">Ici vous avez la liste des différents patrimoines disponibles</p>
+          <p style="color: rgb(0, 0, 0);">Ici vous avez la liste des différents patrimoines proposés par vos utilisateur</p>
         </div>
 
-        <div *ngIf="patnum>0" class="row justify-content-center" style="text-align: center;">
+        <div class="row justify-content-center" style="text-align: center;">
 
           <div class="col-lg-3 col-md-6 d-flex align-items-stretch"  *ngFor="let patrimoines of patrimoine">
             <div class="member" data-aos="fade-up" data-aos-delay="100">
@@ -84,15 +83,13 @@
               <div class="member-info">
                 <h4>Type de patrimoine: <a href="">{{patrimoines.typepat}}</a></h4>
                 <h4>Entreprise réalisatrice: <a href="">{{patrimoines.entreprise}}</a></h4>
+
+                <h2 style="color: rgb(28, 168, 122); display: inline; text-align: left;" *ngIf="patrimoines.validation==1">Déja validé</h2>
+                <h2 style="color: rgb(192, 161, 21); display: inline; text-align: left;" *ngIf="patrimoines.validation==0">En attente</h2>
               </div>
             </div>
           </div>
 
-        </div>
-
-
-        <div *ngIf="patnum==0" class="row justify-content-center" style="text-align: center;">
-           <h2 style="text-align: center;">Aucun patrimoine disponible..</h2>
         </div>
 
       </div>

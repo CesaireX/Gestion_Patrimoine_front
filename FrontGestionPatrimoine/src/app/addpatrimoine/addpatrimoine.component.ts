@@ -8,13 +8,14 @@ import { NoopAnimationPlayer } from '@angular/animations';
 import { __values } from 'tslib';
 import { HttpClient, HttpHeaders, HttpClientModule } from '@angular/common/http';
 import {DateAdapter} from '@angular/material/core';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 import {
   MatDateRangeSelectionStrategy,
   DateRange,
   MAT_DATE_RANGE_SELECTION_STRATEGY,
 } from '@angular/material/datepicker';
 import { combineLatest } from 'rxjs';
-
+import { NgxImageCompressService } from 'ngx-image-compress';
 @Component({
   selector: 'app-addpatrimoine',
   templateUrl: './addpatrimoine.component.html',
@@ -22,6 +23,7 @@ import { combineLatest } from 'rxjs';
   providers: [
   ],
 })
+
 export class AddpatrimoineComponent implements OnInit {
 
   latitude: number = 12.341731853681724;
@@ -40,8 +42,10 @@ export class AddpatrimoineComponent implements OnInit {
 
   @ViewChild('search')
   public searchElementRef!: ElementRef;
+  imgbefore: string="";
+  imgafter: string="";
 
-  constructor(public fb: FormBuilder, private router: Router, private Utilisateurservice: FrontservicesService,private mapsAPILoader: MapsAPILoader, private ngZone: NgZone, public http: HttpClient) {
+  constructor(private imageCompress:NgxImageCompressService, public fb: FormBuilder, private router: Router, private Utilisateurservice: FrontservicesService,private mapsAPILoader: MapsAPILoader, private ngZone: NgZone, public http: HttpClient) {
 
     this.echeancepat = new FormGroup({
       start: new FormControl(),
@@ -95,10 +99,32 @@ export class AddpatrimoineComponent implements OnInit {
 
   deconnexion(){
 
-    localStorage.removeItem('user_name');
+    Swal.fire({
+      title: 'etes vous sur?',
+      text: 'Voulez vous vous deconnecter?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Oui!',
+      cancelButtonText: 'Non'
+    }).then((result) => {
+      if (result.value) {
 
-    this.router.navigate(['/login']);
+        localStorage.removeItem('identifiant');
 
+        Swal.fire(
+          'success!',
+          'success'
+        )
+
+
+   this.router.navigateByUrl('/login');
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Annulé',
+          'error'
+        )
+      }
+    })
 }
 
 getusername(){
@@ -168,7 +194,44 @@ addMarker(lat: number, lng: number) {
       console.log(this.patrimoine);
     })
   }
+
+
+test()
+{
+  this.imageCompress.uploadFile().then(
+    ({image,orientation})=>{
+
+      this.imgbefore=image;
+      console.log(this.imageCompress.byteCount(image))
+
+      this.imageCompress.compressFile(image,orientation,50,50).then( (compressimage)=>{
+      this.imgafter=compressimage;
+      console.log(this.imgafter)
+      console.log(this.imageCompress.byteCount(compressimage))
+      })
+
+      })
+
+}
+
+onchange(event:any){
+
+  let image:any=event.target.files[0];
+
+  this.imgbefore=image;
+  console.log(this.imgbefore)
+  console.log(this.imageCompress.byteCount(this.imgbefore))
+
+  this.imageCompress.compressFile(this.imgbefore,50,50).then( (compressimage)=>{
+  this.imgafter=compressimage;
+  console.log(this.imgafter)
+  console.log(this.imageCompress.byteCount(compressimage))
+  })
+
+}
+
 */
+
   submitPatrimoine2(){
 
     this.submitted = true;
@@ -185,7 +248,7 @@ addMarker(lat: number, lng: number) {
    formdata.append("lat", this.form.controls['lat'].value);
    formdata.append("lng", this.form.controls['lng'].value);
    formdata.append("idUser", this.form.controls['idUser'].value);
-   formdata.append("echeancepat", this.echeancepat.value.start.toUTCString()+ '-' +this.echeancepat.value.end.toUTCString());
+   formdata.append("echeancepat", this.echeancepat.value.start.toISOString().slice(0,10)+  '||'  +this.echeancepat.value.end.toISOString().slice(0,10));
 
    const httpOptions={
      headers: new HttpHeaders({

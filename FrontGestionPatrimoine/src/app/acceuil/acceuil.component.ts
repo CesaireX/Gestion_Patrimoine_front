@@ -3,6 +3,7 @@ import { MapsAPILoader, MouseEvent } from '@agm/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgForm }   from '@angular/forms';
 import {FrontservicesService} from '../services/frontservices.service'
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 @Component({
   selector: 'app-acceuil',
@@ -16,10 +17,13 @@ longitude: number = -1.4921732960342848;
 address: any;
 private geoCoder:any;
 connected= false;
-
+blocage= false;
+admin: any;
 
   @ViewChild('search')
   public searchElementRef!: ElementRef;
+
+
 
   constructor(private router: Router, private Utilisateurservice: FrontservicesService,private mapsAPILoader: MapsAPILoader, private ngZone: NgZone) { }
 
@@ -44,21 +48,90 @@ connected= false;
     });
   }
 
+  simpleAlert(){
+    Swal.fire('Hello Angular');
+  }
+
+
   getusername(){
     this.username=localStorage.getItem('identifiant');
     console.log(this.username);
+    this.admin=localStorage.getItem('admin');
+
+    if(this.admin!=null)
+    {
+      this.blocage=true;
+      console.log(this.blocage)
+    }
+
     if(this.username!=null)
     {
       this.connected=true;
     }
+
+
     console.log(this.connected)
   }
 
   deconnexion(){
 
-    localStorage.removeItem('identifiant');
+    Swal.fire({
+      title: 'etes vous sur?',
+      text: 'Voulez vous vous deconnecter?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Oui!',
+      cancelButtonText: 'Non'
+    }).then((result) => {
+      if (result.value) {
 
-    this.router.navigateByUrl('/login');
+        localStorage.removeItem('identifiant');
+
+        Swal.fire(
+          'success!',
+          'success'
+        )
+
+
+   this.router.navigateByUrl('/login');
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Annulé',
+          'error'
+        )
+      }
+    })
+}
+
+deconnexionadmin(){
+
+  Swal.fire({
+    title: 'etes vous sur?',
+    text: 'Voulez vous vous deconnecter?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Oui!',
+    cancelButtonText: 'Non'
+  }).then((result) => {
+    if (result.value) {
+
+      localStorage.removeItem('admin');
+
+      Swal.fire(
+        'success!',
+        'Le patrimoine a été mis a jour.',
+        'success'
+      )
+
+
+ this.router.navigateByUrl('/login');
+    } else if (result.dismiss === Swal.DismissReason.cancel) {
+      Swal.fire(
+        'Annulé',
+        'error'
+      )
+    }
+  })
 
 }
 

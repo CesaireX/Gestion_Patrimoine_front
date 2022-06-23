@@ -29,22 +29,23 @@
 						  <div class="collapse navbar-collapse justify-content-end align-items-center" id="navbarSupportedContent">
 						    <ul class="navbar-nav">
 
-                  <div *ngIf="!connected">
+                  <div *ngIf="!connected && !blocage">
                     <li><a routerLink="/login" >Connectez vous!</a></li>
                     <li><a routerLink="/inscription">S'inscrire!</a></li>
                       </div>
+                <li  *ngIf="blocage"><a routerLink="/adminview" >ADMIN DASHBOARD</a></li>
+                <li><a *ngIf="blocage" href="#" (click)="deconnexionadmin()">Deconnexion</a></li>
+								<li><a href="/acceuil" >Acceuil</a></li>
+								<li  *ngIf="connected && !blocage"><a href="#" >Autour de moi</a></li>
+								<li  *ngIf="connected && !blocage"><a href="#">Carte des points à voir</a></li>
+								<li  *ngIf="connected && !blocage"><a href="#">Les communes</a></li>
 
-								<li  *ngIf="connected"><a href="#" >Acceuil</a></li>
-								<li  *ngIf="connected"><a href="#" >Autour de moi</a></li>
-								<li  *ngIf="connected"><a href="#">Carte des points à voir</a></li>
-								<li  *ngIf="connected"><a href="#">Les communes</a></li>
-
-							    <li *ngIf="connected" class="dropdown">
+							    <li *ngIf="connected && !blocage" class="dropdown">
 							      <a class="dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
 							        Profil
 							      </a>
 							      <div class="dropdown-menu">
-							        <a class="dropdown-item" href="#" >Consulter votre profil</a>
+							        <a class="dropdown-item" routerLink="/profil" >Consulter votre profil</a>
 							        <a class="dropdown-item" href="#" (click)="deconnexion()">Deconnexion</a>
 							      </div>
 							    </li>
@@ -66,8 +67,8 @@
                     <span>DU PATRIMOINE</span>
                   </h1>
                   <p style="color: white">Decouvrez toutes les portes ouvertes, visites </p>
-                  <a *ngIf="connected" routerLink="/addpatrimoine" class="primary-btn2 header-btn text-uppercase">Ajouter un patrimoine!</a><br><br><br>
-                  <a routerLink="/listepatrimoine" class="primary-btn2 header-btn text-uppercase">Liste des patrimoines</a>
+                  <a *ngIf="connected && !blocage" routerLink="/addpatrimoine" class="btn btn-info">Ajouter un patrimoine!</a><br><br><br>
+                  <a routerLink="/listepatrimoine" class="btn btn-info">Liste des patrimoines</a>
 
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">

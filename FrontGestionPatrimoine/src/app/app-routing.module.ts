@@ -6,14 +6,21 @@ import { HomeComponent } from './home/home.component';
 import { AcceuilComponent } from './acceuil/acceuil.component';
 import { AddpatrimoineComponent } from './addpatrimoine/addpatrimoine.component';
 import { ListepatrimoinesComponent } from './listepatrimoines/listepatrimoines.component';
+import { DetailpatrimoineComponent } from './detailpatrimoine/detailpatrimoine.component';
+import { ProfilComponent } from './profil/profil.component';
+import { AdminviewComponent } from './adminview/adminview.component';
 
 const routes: Routes = [
-  { path: '', component: LoginComponent },
+  { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent },
   { path: 'inscription', component: InscriptionsComponent },
   { path: 'acceuil', component: AcceuilComponent },
+  { path: '', component: AcceuilComponent },
   { path: 'addpatrimoine', component: AddpatrimoineComponent },
   { path: 'listepatrimoine', component: ListepatrimoinesComponent },
+  { path: 'detailpatrimoine', component: DetailpatrimoineComponent },
+  { path: 'profil', component: ProfilComponent },
+  { path: 'adminview', component: AdminviewComponent },
 ];
 
 @NgModule({

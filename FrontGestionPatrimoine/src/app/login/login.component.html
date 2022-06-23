@@ -23,54 +23,43 @@
   <div class="container-login100">
     <div class="wrap-login100">
 
-      <div class="login100-pic js-tilt" data-tilt>
-        <img src="../../assets/img2/patrimoine4.jpg" alt="IMG">
-      </div>
-
       <form [formGroup]="form" (ngSubmit)="submitLogin2()" novalidate>
         <span class="acceuil">
           PATRIMOINES
         </span>
 
 
+        <div class="row justify-content-center">
+
         <mat-form-field appearance="fill">
           <mat-label>Entrez votre email</mat-label>
           <input matInput placeholder="pat@example.com" formControlName="email" [ngClass]="{ 'is-invalid': submitted && form.controls['email'].errors }" [ngClass]="{ 'is-valid': submitted && form.controls['email'].valid}" required>
         </mat-form-field>
-        <div *ngIf="submitted && form.controls['email'].errors" class="text-danger">
-          <div *ngIf="form.controls['email'].errors['required']">Obligatoire</div>
-        </div>
+        <span class="text-danger"
+        *ngIf="(formcontrol['email'].touched || submitted) && formcontrol['email'].errors?.['required']">
+        entrez un email valide
+    </span>
 
-        <br><br>
+<br>
 
-        <mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Entrez votre mot de passe</mat-label>
           <input matInput placeholder="Mot de passe" [type]="hide ? 'password' : 'text'" formControlName="password" [ngClass]="{ 'is-invalid': submitted && form.controls['password'].errors }" [ngClass]="{ 'is-valid': submitted && form.controls['password'].valid}" required>
           <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
         </mat-form-field>
-        <div *ngIf="submitted && form.controls['password'].errors" class="text-danger">
-          <div *ngIf="form.controls['password'].errors['required']">Obligatoire</div>
-        </div>
-
-<!--
-        <div style="margin-top: -30px;" class="form-group">
-          <label style="font-family: bold;" for="usr"><strong><i class="fa fa-envelope" aria-hidden="true"></i> Email</strong></label>
-          <input placeholder="email" ngModel name="email" type="text" class="form-control" id="usr" required minlength="4">
-        </div>
-
-        <div class="form-group">
-          <label style="font-family: bold;" for="usr"><strong><i class="fa fa-lock" aria-hidden="true"></i> Mot de passe</strong></label>
-          <input required="required" placeholder="Mot de passe" ngModel name="password" type="password" class="form-control" id="usr" required minlength="1">
-        </div>
-
-
-        <br><br><br><br><br><br>
--->
+        <span class="text-danger"
+        *ngIf="(formcontrol['password'].touched || submitted) && formcontrol['password'].errors?.['required']">
+        entrez un mot de passe valide
+    </span>
 
 <div style="text-align: center;" *ngIf="!verification" class="text-danger">
   <div *ngIf="!verification">Mauvais email ou mauvais mot de passe</div>
 </div>
 
-        <button type="submit" class="subscribe btn btn-success btn-block rounded-pill shadow-sm">Se connecter</button>
+<mat-spinner *ngIf="spinner"></mat-spinner>
+
+</div>
+        <button [disabled]="form.invalid" type="submit" class="subscribe btn btn-success btn-block rounded-pill shadow-sm">Se connecter</button>
 
         <div class="text-center p-t-12">
           <span>
@@ -97,6 +86,7 @@
             <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
           </a>
         </div>
+
       </form>
 
     </div>
