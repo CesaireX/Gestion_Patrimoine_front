@@ -262,7 +262,7 @@ onchange(event:any){
    formdata.append("lat", this.form.controls['lat'].value);
    formdata.append("lng", this.form.controls['lng'].value);
    formdata.append("idUser", this.form.controls['idUser'].value);
-   formdata.append("echeancepat", this.echeancepat.value.start.toISOString().slice(0,10)+  '||'  +this.echeancepat.value.end.toISOString().slice(0,10));
+   formdata.append("echeancepat", this.echeancepat.value.start.toISOString().slice(0,10)+  ' au '  +this.echeancepat.value.end.toISOString().slice(0,10));
 
    const httpOptions={
      headers: new HttpHeaders({
@@ -270,6 +270,7 @@ onchange(event:any){
      })
    };
 
+<<<<<<< HEAD
    this.http.post('http://127.0.0.1:8000/api/saveP',formdata,httpOptions).subscribe({
      next: (v) =>
      Swal.fire({
@@ -284,6 +285,17 @@ onchange(event:any){
       icon: 'error',
     })
    })
+=======
+   if(this.http.post('http://127.0.0.1:8000/api/saveP',formdata,httpOptions).subscribe({
+     next: (v) => console.log('success: ',v)
+   })){
+      Swal.fire(
+        'success!!!',
+        'Le patrimoine a été enregistré et sera visible lorsque l\'administrateur l\'aura valider.'
+      )
+      this.router.navigateByUrl('/acceuil');
+    }
+>>>>>>> 2694985a67db85c3c5c00a6095702ccfe04aae29
 
    console.log([...formdata]);
 
