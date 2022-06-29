@@ -7,6 +7,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { AppComponent } from './app.component';
@@ -28,6 +29,9 @@ import { ProfilComponent } from './profil/profil.component';
 import { AdminviewComponent } from './adminview/adminview.component';
 import { SweetAlertOptions } from 'sweetalert2';
 import { MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { BarreComponent } from './barre/barre.component';
+import { SpinnerCircularModule } from 'spinners-angular/spinner-circular';
+import { CommentairesComponent } from './commentaires/commentaires.component';
 const routes: Routes = [
 ];
 
@@ -43,9 +47,11 @@ const routes: Routes = [
     DetailpatrimoineComponent,
     ProfilComponent,
     AdminviewComponent,
+    BarreComponent,
+    CommentairesComponent,
   ],
   imports: [
-    BrowserModule,MatProgressSpinnerModule, MatSelectModule, MatFormFieldModule ,HttpClientModule,MatButtonModule, RouterModule.forRoot(routes),ReactiveFormsModule,MatNativeDateModule,MatDatepickerModule,MatInputModule,
+    BrowserModule,MatProgressSpinnerModule,MatSnackBarModule, MatSelectModule, MatFormFieldModule ,HttpClientModule,MatButtonModule, RouterModule.forRoot(routes),ReactiveFormsModule,MatNativeDateModule,MatDatepickerModule,MatInputModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAosX1kf5h0myKulz8AF9sDKxtMlI69Sko',
       libraries: ['places']

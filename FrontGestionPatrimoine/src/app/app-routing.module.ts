@@ -9,6 +9,8 @@ import { ListepatrimoinesComponent } from './listepatrimoines/listepatrimoines.c
 import { DetailpatrimoineComponent } from './detailpatrimoine/detailpatrimoine.component';
 import { ProfilComponent } from './profil/profil.component';
 import { AdminviewComponent } from './adminview/adminview.component';
+import { BarreComponent } from './barre/barre.component';
+import { CommentairesComponent } from './commentaires/commentaires.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -21,6 +23,8 @@ const routes: Routes = [
   { path: 'detailpatrimoine', component: DetailpatrimoineComponent },
   { path: 'profil', component: ProfilComponent },
   { path: 'adminview', component: AdminviewComponent },
+  { path: 'barre', component: BarreComponent },
+  { path: 'commentaires', component: CommentairesComponent },
 ];
 
 @NgModule({

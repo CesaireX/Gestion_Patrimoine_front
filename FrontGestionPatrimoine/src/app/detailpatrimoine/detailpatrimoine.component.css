@@ -1490,9 +1490,15 @@ section {
 
 .blog .entry {
   padding: 30px;
+  max-width: 375px;
   margin-bottom: 60px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
+
+.mat-icon {
+  font-size: 15px;
+}
+
 
 .blog .entry .entry-img {
   max-height: 400px;
@@ -1864,6 +1870,7 @@ section {
 
 .blog .sidebar {
   padding: 30px;
+  max-width: 1000px;
   margin: 0 0 60px 20px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }

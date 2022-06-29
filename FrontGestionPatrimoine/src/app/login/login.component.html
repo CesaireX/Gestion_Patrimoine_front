@@ -56,10 +56,12 @@
   <div *ngIf="!verification">Mauvais email ou mauvais mot de passe</div>
 </div>
 
-<mat-spinner *ngIf="spinner"></mat-spinner>
+<mat-spinner *ngIf="spinner" diameter="40"></mat-spinner>
+
+<button class="myclass" [disabled]="form.invalid" type="submit" class="subscribe btn btn-success btn-block rounded-pill shadow-sm">Se connecter</button>
 
 </div>
-        <button [disabled]="form.invalid" type="submit" class="subscribe btn btn-success btn-block rounded-pill shadow-sm">Se connecter</button>
+
 
         <div class="text-center p-t-12">
           <span>

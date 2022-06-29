@@ -1,3 +1,4 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Patrimoine } from './../interfaces/patrimoine';
 import { Component, OnInit, NgZone } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -26,15 +27,22 @@ export class DetailpatrimoineComponent implements OnInit {
   totalcomments: any;
   comments: any;
   userdetails: any;
+  spiner2: any;
+  message="ok";
+  action="annuler";
+  limit=2;
+  idresponse:any="";
+  name:string="";
+  replies: any;
 
-  constructor(private ngZone: NgZone,public fb:FormBuilder,private router:Router,private aroute:ActivatedRoute,private Utilisateurservice:FrontservicesService,public http: HttpClient) {
+  constructor(public snackbar:MatSnackBar, private ngZone: NgZone,public fb:FormBuilder,private router:Router,private aroute:ActivatedRoute,private Utilisateurservice:FrontservicesService,public http: HttpClient) {
 
     this.form=this.fb.group({
       userid:['', Validators.required ],
       patid:['', Validators.required ],
-      comment:['', Validators.required ],
+      comment:null,
       username:['', Validators.required ],
-      parentid:null,
+      parentid:null
     })
 
    }
@@ -62,6 +70,7 @@ this.getlong();
 this.getcommentnumber();
 this.getcomments();
 this.getuser();
+this.getreplies();
   }
 
   getcommentnumber(){
@@ -122,6 +131,22 @@ this.Utilisateurservice.getlong(this.id).subscribe(data=>{
    }
 
 
+
+   getreplies()
+   {
+    this.aroute.queryParams.subscribe((params)=>{
+      this.id=params['id'];
+      console.log(this.id)
+    })
+
+    this.Utilisateurservice.getprimarycomment(this.id).subscribe(data=>{
+      this.replies = data;
+      console.log(this.replies);
+    })
+
+   }
+
+
   getusername(){
     this.username=localStorage.getItem('identifiant');
     console.log(this.username);
@@ -142,73 +167,12 @@ this.Utilisateurservice.getlong(this.id).subscribe(data=>{
     console.log(this.username)
   }
 
-  deconnexion(){
-
-    Swal.fire({
-      title: 'etes vous sur?',
-      text: 'Voulez vous vous deconnecter?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Oui!',
-      cancelButtonText: 'Non'
-    }).then((result) => {
-      if (result.value) {
-
-        localStorage.removeItem('identifiant');
-
-        Swal.fire(
-          'success!',
-          'success'
-        )
-
-
-   this.router.navigateByUrl('/login');
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire(
-          'Annulé',
-          'error'
-        )
-      }
-    })
-}
-
-deconnexionadmin(){
-
-  Swal.fire({
-    title: 'etes vous sur?',
-    text: 'Voulez vous vous deconnecter?',
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonText: 'Oui!',
-    cancelButtonText: 'Non'
-  }).then((result) => {
-    if (result.value) {
-
-      localStorage.removeItem('admin');
-
-      Swal.fire(
-        'success!',
-        'success'
-      )
-
-
- this.router.navigateByUrl('/login');
-    } else if (result.dismiss === Swal.DismissReason.cancel) {
-      Swal.fire(
-        'Annulé',
-        'error'
-      )
-    }
-  })
-
-}
-
   validerpatrimoine()
   {
 
     Swal.fire({
       title: 'etes vous sur?',
-      text: 'Voulez vous Valider ce patrimoine!',
+      text: 'Voulez vous vraiment Valider ce patrimoine??',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Oui, le valider!',
@@ -243,12 +207,37 @@ deconnexionadmin(){
     })
   }
 
+  response(id:any,name:any)
+  {
+   this.idresponse=id;
+   this.name=name;
+  }
+
+  actualiser()
+  {
+    this.aroute.queryParams.subscribe((params)=>{
+      this.id=params['id'];
+      console.log(this.id)
+    })
+
+    this.Utilisateurservice.getcommentsnumber(this.id).subscribe(data=>{
+      this.totalcomments = data;
+      console.log(this.totalcomments);
+    })
+
+    this.limit=this.totalcomments
+  }
+
+  actualiserplus()
+  {
+    this.limit=2
+  }
+
   retirerpatrimoine()
   {
 
     Swal.fire({
-      title: 'etes vous sur?',
-      text: 'Voulez vous retracter ce patrimoine!',
+      title: 'etes vous sur de vouloir retirer ce patrimoine?',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Oui, le retracter!',
@@ -283,6 +272,11 @@ deconnexionadmin(){
     })
   }
 
+  redirect(id:number)
+{
+  console.log(id)
+  this.router.navigate(['/commentaires'], { queryParams: {id: id}})
+}
 
   getuser(){
     this.username=localStorage.getItem('identifiant');
@@ -297,26 +291,58 @@ deconnexionadmin(){
   comment()
   {
 
-    this.submitted = true;
-    const formdata:any =new FormData();
-    formdata.append("userid", this.form.controls['userid'].value);
-    formdata.append("patid", this.form.controls['patid'].value);
-    formdata.append("comment", this.form.controls['comment'].value);
-    formdata.append("username", this.form.controls['username'].value);
-    formdata.append("parentid", this.form.controls['parentid'].value);
-
-    const httpOptions={
-      headers: new HttpHeaders({
-        'Accept': 'application/json'
+    if(this.form.controls['userid'].value==null || this.form.controls['patid'].value==null || this.form.controls['comment'].value==null || this.form.controls['username'].value==null || this.form.controls['parentid'].value==null)
+    {
+      Swal.fire({
+        title: 'Oups?',
+        text: 'Veuillez a remplir tous les champs obligatoires',
+        icon: 'error',
       })
-    };
+    }
 
-    this.http.post('http://127.0.0.1:8000/api/comment',formdata,httpOptions).subscribe({
-      next: (v) => console.log('success: ',v)
-    })
+    else
+    {
+      this.spiner2=true;
 
-    console.log([...formdata]);
+      setTimeout(()=>{
 
+        this.submitted = true;
+        const formdata:any =new FormData();
+        formdata.append("userid", this.form.controls['userid'].value);
+        formdata.append("patid", this.form.controls['patid'].value);
+        formdata.append("comment", this.form.controls['comment'].value);
+        formdata.append("username", this.form.controls['username'].value);
+        formdata.append("parentid", this.form.controls['parentid'].value);
+
+        const httpOptions={
+          headers: new HttpHeaders({
+            'Accept': 'application/json'
+          })
+        };
+
+        this.http.post('http://127.0.0.1:8000/api/comment',formdata,httpOptions).subscribe({
+          next: (v) => console.log('success: ',v)
+        })
+
+        console.log([...formdata]);
+        this.spiner2=false;
+
+        this.ngOnInit();
+
+        this.snackbar.open('Commentaire publié!!','ok', {
+          duration: 2000,
+        });
+
+      },5000)
+
+    }
+
+  }
+
+  open(message: string, action: string) {
+    this.snackbar.open(message, action, {
+      duration: 2000,
+    });
   }
 
 

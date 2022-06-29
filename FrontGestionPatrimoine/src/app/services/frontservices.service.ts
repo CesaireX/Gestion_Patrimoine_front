@@ -1,7 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
-import {  Observable, throwError } from 'rxjs';
+import {  BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Utilisateur } from '../interfaces/utilisateur';
 import { Patrimoine } from '../interfaces/patrimoine';
@@ -16,6 +16,12 @@ export class FrontservicesService{
 
   public utilisateur: Utilisateur[] = [];
   public username: any;
+  private spinnerdeconnect= new BehaviorSubject(false);
+  loading= this.spinnerdeconnect.asObservable();
+
+  setloading=(value:boolean)=>{
+  this.spinnerdeconnect.next(value);
+  }
 
   MatchPassword(password: string, confirmPassword: string) {
     return (formGroup: FormGroup) => {
@@ -89,6 +95,7 @@ export class FrontservicesService{
   {
     return this.httpClient.get('http://127.0.0.1:8000/api/getpatrimoinesnumber');
   }
+
 
 
   getapatrimoinebyuserid(id:any)

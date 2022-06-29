@@ -6,6 +6,28 @@ agm-map {
   margin-left: 8px;
 }
 
+.classB{
+  background-color: black;
+  opacity: 0.5; /*ici de 0 à 1, 1 etant noir absolu */
+}
+
+.loader
+{
+  margin-left: 650px;
+  margin-bottom: -650px;
+}
+
+@media (max-width: 992px) {
+  .loader
+  {
+    margin-left: 250px;
+    margin-bottom: -250px;
+  }
+
+}
+
+
+
 
 .datepicker {
   padding: 4px;

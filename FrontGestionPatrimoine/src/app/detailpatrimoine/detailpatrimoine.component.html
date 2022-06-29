@@ -21,68 +21,32 @@
 
   <body>
 
-    <header class="default-header">
-      <nav class="navbar navbar-expand-lg  navbar-light">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">
-              <span>Patrimoines</span>
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse justify-content-end align-items-center" id="navbarSupportedContent">
-              <ul class="navbar-nav">
-                <div *ngIf="!connected && !blocage">
-                  <li><a routerLink="/login" >Connectez vous!</a></li>
-                  <li><a routerLink="/inscription">S'inscrire!</a></li>
-                    </div>
-              <li  *ngIf="blocage"><a routerLink="/adminview" >ADMIN DASHBOARD</a></li>
-              <li><a *ngIf="blocage" href="#" (click)="deconnexionadmin()">Deconnexion</a></li>
-              <li><a href="/acceuil" >Acceuil</a></li>
-              <li  *ngIf="connected && !blocage"><a href="#" >Autour de moi</a></li>
-              <li  *ngIf="connected && !blocage"><a href="#">Carte des points à voir</a></li>
-              <li  *ngIf="connected && !blocage"><a href="#">Les communes</a></li>
-
-                <li *ngIf="connected && !blocage" class="dropdown">
-                  <a class="dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                    Profil
-                  </a>
-                  <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#" >Consulter votre profil</a>
-                    <a class="dropdown-item" href="#" (click)="deconnexion()">Deconnexion</a>
-                  </div>
-                </li>
-              </ul>
-            </div>
-        </div>
-      </nav>
-    </header>
-
+    <app-barre></app-barre>
+<br>
     <section id="blog" class="blog">
-      <div class="container" data-aos="fade-up">
+      <div class="container">
 
-        <strong><h1 style="text-align: center;">Details sur le patrimoine</h1></strong>
+        <span><h1 style="text-align: center;">Details sur le patrimoine</h1></span>
 
         <div class="row">
 
-          <div class="col-lg-8 entries">
+          <div class="col-lg-4 entries">
 
             <article class="entry" *ngFor="let patrimoine of patrimoines">
 
               <div class="entry-img">
-                <img [src]="imagepath + patrimoine.image" alt="" class="img-fluid">
+                <img style="width: 500px; height: 300px;" [src]="imagepath + patrimoine.image" alt="" class="img-fluid">
               </div>
 
               <h2 class="entry-title">
-                <a href="blog-single.html">{{patrimoine.titre}} / {{patrimoine.pays}} / {{patrimoine.ville}}</a>
+                <a>{{patrimoine.titre}} / {{patrimoine.pays}} / {{patrimoine.ville}}</a>
               </h2>
 
               <div class="entry-meta">
                 <ul>
-                  <li class="d-flex "><i class="icofont-user"></i> <a href="blog-single.html">Entreprise réalisatrice: {{patrimoine.entreprise}}</a></li><br>
-                  <li class="d-flex "><i class="icofont-user"></i><a href="blog-single.html">Chef d'équipe: {{patrimoine.chefEquipe}}</a></li><br>
-                  <li class="d-flex "><i class="icofont-wall-clock"></i><strong> <a href="blog-single.html">Date d'écheance: {{patrimoine.echeance}}</a></strong></li>
+                  <li class="d-flex "><i class="icofont-user"></i> <a>Entreprise réalisatrice: {{patrimoine.entreprise}}</a></li><br>
+                  <li class="d-flex "><i class="icofont-user"></i><a>Chef d'équipe: {{patrimoine.chefEquipe}}</a></li><br>
+                  <li class="d-flex "><i class="icofont-wall-clock"></i><strong> <a>Date d'écheance: {{patrimoine.echeance}}</a></strong></li>
                 </ul>
               </div>
 
@@ -91,7 +55,7 @@
                   Description: {{patrimoine.description}}
                 </p>
 
-                <form *ngIf="!blocage" [formGroup]="form"(ngSubmit)="comment()" name="myform" novalidate>
+              <!--  <form *ngIf="!blocage" [formGroup]="form"(ngSubmit)="comment()" name="myform" novalidate>
 
                 <div style="display: inline;" *ngFor="let userdetailss of userdetails">
 
@@ -108,13 +72,12 @@
                 <div class="read-more" style="display: inline;">
                   <button [ngClass]="{ 'disabled': form.controls['comment'].invalid}" type="submit" class="btn btn-primary">commenter</button>
                 </div>
-
-                </form>
+                </form>-->
 
                 <div *ngIf="!blocage" style="text-align: right;">
-                <button class="btn btn-success">
-                like
-                </button>
+                  <button mat-mini-fab color="accent" aria-label="Example icon button with a heart icon">
+                    <mat-icon>favorite</mat-icon>
+                  </button>
                 </div>
 
                 <div *ngIf="blocage && patrimoine.validation==0" style="text-align: right;">
@@ -131,47 +94,19 @@
 
                 <br *ngIf="!blocage"><br>
 
-  <div *ngIf="totalcomments>0">
-                 <h2>Quelques commentaires récents</h2>
-
-               <table class="table">
-                 <thead>
-                   <th scope="col">Utilisateur</th>
-                   <th scope="col">Commentaire</th>
-                   <th scope="col">Action</th>
-                 </thead>
-                 <tbody *ngFor="let comment of comments">
-
-                  <td>
-                    {{comment.username}}
-                   </td>
-
-                   <td>
-                    {{comment.comment}}
-                   </td>
-
-                   <td>
-                     <button class="btn btn-danger">Répondre</button>
-                   </td>
-
-                 </tbody>
-               </table>
-
-  </div>
-
               </div>
 
             </article>
           </div>
 
-          <div class="col-lg-4">
+          <div *ngFor="let patrimoine of patrimoines" class="col-lg-8">
 
             <div class="sidebar">
 
               <h3 class="sidebar-title">Localisation</h3>
               <div class="sidebar-item search-form">
 
-                <div  *ngFor="let patrimoine of patrimoines">
+                <div>
                   <agm-map [latitude]="latitude" [longitude]="longitude">
                     <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
                   </agm-map>
@@ -183,13 +118,105 @@
               <h3 class="sidebar-title">Autres détails</h3>
               <div class="sidebar-item categories">
                 <ul>
-                  <li><a href="#">Commentaires <span>({{totalcomments}})</span></a></li>
+                  <li><a (click)="redirect(id)">Commentaires <span>({{totalcomments}})</span></a></li>
                   <li><a href="#">Like <span>(12)</span></a></li>
                   <li><a href="#">Visites <span>(5)</span></a></li>
                 </ul>
               </div><!-- End sidebar categories-->
 
+
+                <h2>Quelques commentaires récents</h2>
+
+                 <div class="col-md-8 col-lg-12">
+                   <div class="card shadow-0 border" style="background-color: #f0f2f5;">
+                     <div class="card-body p-8">
+
+                       <form *ngIf="!blocage" [formGroup]="form"(ngSubmit)="comment()" name="myform" novalidate>
+
+                       <div style="display: inline;" *ngFor="let userdetailss of userdetails">
+
+                         <input  style="visibility: hidden; width: 0; height: 0; margin-top: -70px;" [(ngModel)]="username" class="form-control" formControlName="userid" type="any" value="{{username}}">
+                         <input  style="visibility: hidden; width: 0; height: 0;" [(ngModel)]="patrimoine.id" class="form-control" formControlName="patid" type="any" value="{{patrimoine.id}}">
+                         <input  style="visibility: hidden; width: 0; height: 0;" [(ngModel)]="userdetailss.prenom" type="any" class="form-control" value="{{userdetailss.nom}} {{userdetailss.prenom}}" formControlName="username" >
+                         <input  class="form-control" formControlName="parentid" [(ngModel)]="idresponse" type="any" value="{{idresponse}}">
+
+                       </div>
+
+                       <div class="form-outline mb-4">
+
+                         <input [style.color]="'blue'" value="@{{name}}" formControlName="comment" [ngClass]="{ 'is-invalid': submitted && form.controls['comment'].errors }" [ngClass]="{ 'is-valid': submitted && form.controls['comment'].valid}" class="form-control" placeholder="Laissez votre commentaire..."  required/>
+                         <button [ngClass]="{ 'disabled': form.controls['comment'].invalid}" type="submit" mat-button color="primary" aria-label="Example icon button with create button">
+                           <mat-icon>create</mat-icon>Commenter?
+                         </button>
+                         <mat-spinner *ngIf="spiner2" diameter="50"></mat-spinner>
+                       </div>
+
+                       </form>
+
+                       <div *ngIf="totalcomments>0" class="card mb-4">
+                         <div class="card-body" *ngFor="let comment of comments.slice(0,limit)">
+                           <p *ngIf="comment.parent_id==null">{{comment.comment}}</p>
+
+                           <div class="d-flex justify-content-between" *ngIf="comment.parent_id==null">
+                             <div class="d-flex flex-row align-items-center">
+                               <img src="assets/img2/image12.png" alt="avatar" width="25"
+                                 height="25" />
+                               <p class="small mb-0 ms-2">{{comment.username}}</p>
+                             </div>
+                             <div class="d-flex flex-row align-items-center">
+                               <a (click)="response(comment.id,comment.username)"><p class="small text-muted mb-0">Repondre?</p></a>
+                             </div>
+                           </div>
+
+                           <div *ngFor="let replie of replies">
+                            <div *ngIf="replie.parent_id==comment.id">
+
+                          <div class="card-body">
+                            <p>Réponses à <span style="color: blue;">@{{comment.username}}</span> </p>
+                              <p>{{replie.comment}}</p>
+
+                            <div class="d-flex justify-content-between">
+                              <div class="d-flex flex-row align-items-center">
+                                <img src="assets/img2/image12.png" alt="avatar" width="25"
+                                  height="25" />
+                                <p class="small mb-0 ms-2">{{replie.username}}</p>
+                              </div>
+                              <div class="d-flex flex-row align-items-center">
+                                <a (click)="response(replie.id,replie.username)"><p class="small text-muted mb-0">Repondre?</p></a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+
+                         </div>
+                       </div>
+
+
+                       <div *ngIf="totalcomments==0">
+
+                          <div class="d-flex justify-content-between">
+                            Aucun commentaire sur ce patrimoine
+                          </div>
+
+                       </div>
+
+                       <div style="text-align: left;" *ngIf="totalcomments>2 && totalcomments!=limit">
+                      <a (click)="actualiser()">Voir tous les commentaires<mat-icon>keyboard_arrow_down</mat-icon></a>
+                      </div>
+
+                      <div style="text-align: left;" *ngIf="totalcomments>2 && totalcomments==limit">
+                        <a (click)="actualiserplus()">Voir les commentaires récents<mat-icon>keyboard_arrow_up</mat-icon></a>
+                        </div>
+
+                     </div>
+                   </div>
+                 </div>
+
             </div><!-- End sidebar -->
+
+
 
           </div><!-- End blog sidebar -->
 

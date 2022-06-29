@@ -480,3 +480,46 @@ agm-map {
 .mat-form-field{
   width:365px !important;
 }
+
+.classB{
+  background-color: black;
+  opacity: 0.5; /*ici de 0 à 1, 1 etant noir absolu */
+}
+
+@media (max-width: 379px) {
+  .mat-form-field{
+    width:330px !important;
+  }
+  .myclass
+  {
+    width: 20px;
+  }
+}
+
+@media (max-width: 348px) {
+  .mat-form-field{
+    width:310px !important;
+  }
+  .myclass
+  {
+    width: 20px;
+  }
+}
+
+@media (max-width: 328px) {
+  .mat-form-field{
+    width:290px !important;
+  }
+}
+
+@media (max-width: 321px) {
+  .mat-form-field{
+    width:260px !important;
+  }
+}
+
+@media (max-width: 290px) {
+  .mat-form-field{
+    width:230px !important;
+  }
+}

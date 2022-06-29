@@ -1,6 +1,6 @@
 import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit, ViewChild, ElementRef, NgZone, Injectable } from '@angular/core';
-import { MapsAPILoader, MouseEvent } from '@agm/core';
+import { AgmBicyclingLayer, MapsAPILoader, MouseEvent } from '@agm/core';
 import {FrontservicesService} from '../services/frontservices.service';
 import { FormGroup, FormControl, Validators, FormBuilder  }   from '@angular/forms';
 import { Patrimoine } from '../interfaces/patrimoine';
@@ -16,6 +16,7 @@ import {
 } from '@angular/material/datepicker';
 import { combineLatest } from 'rxjs';
 import { NgxImageCompressService } from 'ngx-image-compress';
+import { AnyCatcher } from 'rxjs/internal/AnyCatcher';
 @Component({
   selector: 'app-addpatrimoine',
   templateUrl: './addpatrimoine.component.html',
@@ -37,8 +38,9 @@ export class AddpatrimoineComponent implements OnInit {
   echeancepat: FormGroup;
   public username: any;
   connected= false;
-  submitted = true;
-
+  submitted: any;
+  spinner:any;
+  color:any;
 
   @ViewChild('search')
   public searchElementRef!: ElementRef;
@@ -54,24 +56,24 @@ export class AddpatrimoineComponent implements OnInit {
 
     this.form=this.fb.group({
       imgpat:null,
-      nompat:['', Validators.required ],
-      descpat: ['', Validators.required ],
-      typepat: ['', Validators.required ],
-      entpat: ['', Validators.required ],
-      chfequippat: ['', Validators.required ],
+      nompat:['', [Validators.required,Validators.pattern('^[a-zA-Z \-\']+'),Validators.minLength(2)]],
+      descpat: ['', [Validators.required,Validators.pattern('^[a-zA-Z \-\']+'),Validators.minLength(6)]],
+      typepat: ['', [Validators.required,Validators.pattern('^[a-zA-Z \-\']+'),Validators.minLength(2)] ],
+      entpat: ['', [Validators.required,Validators.minLength(2)] ],
+      chfequippat: ['', [Validators.required,Validators.pattern('^[a-zA-Z \-\']+'),Validators.minLength(2)] ],
       planfilepat: null,
-      payspat: ['', Validators.required ],
-      villepat: ['', Validators.required ],
-      lat: [""],
-      lng: [""],
+      payspat: ['', [Validators.required,Validators.pattern('^[a-zA-Z \-\']+'),Validators.minLength(2)] ],
+      villepat: ['', [Validators.required,Validators.pattern('^[a-zA-Z \-\']+'),Validators.minLength(2)] ],
+      lat: ['',Validators.required],
+      lng: ['',Validators.required],
       echeancepat: [this.echeancepat.value, Validators.required ],
       start:['',Validators.required],
       end: ['', Validators.required ],
-      idUser: [],
+      idUser: [,Validators.required],
     })
    }
 
-   get all() {
+   get FormControl() {
     return this.form.controls;
     }
 
@@ -100,7 +102,7 @@ export class AddpatrimoineComponent implements OnInit {
   deconnexion(){
 
     Swal.fire({
-      title: 'etes vous sur?',
+      title: 'Etes vous sur?',
       text: 'Voulez vous vous deconnecter?',
       icon: 'warning',
       showCancelButton: true,
@@ -111,16 +113,12 @@ export class AddpatrimoineComponent implements OnInit {
 
         localStorage.removeItem('identifiant');
 
-        Swal.fire(
-          'success!',
-          'success'
-        )
+        this.router.navigateByUrl('/login');
+      }
 
-
-   this.router.navigateByUrl('/login');
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
+      else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire(
-          'Annulé',
+          '',
           'error'
         )
       }
@@ -234,7 +232,23 @@ onchange(event:any){
 
   submitPatrimoine2(){
 
-    this.submitted = true;
+    if( this.form.controls['echeancepat'].value == null || this.form.controls['imgpat'].value == null || this.form.controls['nompat'].value == null || this.form.controls['descpat'].value == null || this.form.controls['typepat'].value == null || this.form.controls['entpat'].value == null || this.form.controls['chfequippat'].value == null || this.form.controls['planfilepat'].value == null || this.form.controls['payspat'].value == null || this.form.controls['villepat'].value == null )
+    {
+      Swal.fire({
+        title: 'Oups?',
+        text: 'Veuillez a remplir tous les champs obligatoires',
+        icon: 'error',
+      })
+    }
+
+    else{
+
+      this.spinner=true;
+      this.color=true;
+
+    setTimeout(() =>{
+
+   this.submitted = true;
    const formdata:any =new FormData();
    formdata.append("imgpat", this.form.controls['imgpat'].value);
    formdata.append("nompat", this.form.controls['nompat'].value);
@@ -257,10 +271,30 @@ onchange(event:any){
    };
 
    this.http.post('http://127.0.0.1:8000/api/saveP',formdata,httpOptions).subscribe({
-     next: (v) => console.log('success: ',v)
+     next: (v) =>
+     Swal.fire({
+      title: 'Felicitation?',
+      text: 'Votre patrimoine a été enregistré',
+      icon: 'success',
+    }),
+     error: (e) =>
+     Swal.fire({
+      title: 'Oups?',
+      text: 'Il semblerait que votre enregistrement est rencontré un probléme',
+      icon: 'error',
+    })
    })
 
    console.log([...formdata]);
+
+   this.spinner=false
+   this.color=false
+
+    },5000)
+
+
+  }
+
   }
 
   readUrl2(event:any) {

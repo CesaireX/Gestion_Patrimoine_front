@@ -1,0 +1,34 @@
+
+
+    <header class="default-header">
+      <nav class="navbar navbar-expand-lg  navbar-light">
+        <div class="container">
+            <a class="navbar-brand">
+              <strong><h2 style="margin-top: 10px;">Patrimoines</h2></strong>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-end align-items-center" id="navbarSupportedContent">
+              <ul class="navbar-nav">
+              <li *ngIf="!connected && !blocage"><a routerLink="/login" >Connectez vous!</a></li>
+              <li *ngIf="!connected && !blocage"><a routerLink="/inscription">S'inscrire!</a></li>
+              <li *ngIf="blocage"><a routerLink="/adminview" >ADMIN DASHBOARD</a></li>
+              <li><a style="color: red;" *ngIf="blocage" (click)="deconnexionadmin()">Deconnexion<mat-icon aria-label="Example home icon">power_settings_new</mat-icon></a></li>
+              <li><a routerLink="/acceuil">Acceuil<mat-icon aria-label="Example home icon">home</mat-icon></a></li>
+                <li *ngIf="connected && !blocage" class="dropdown">
+                  <a class="dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                    Profil
+                  </a>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" routerLink="/profil" >Consulter votre profil<mat-icon aria-label="Example home icon">account_circle</mat-icon></a>
+                    <a class="dropdown-item" (click)="deconnexion()">Deconnexion<mat-icon aria-label="Example home icon">power_settings_new</mat-icon></a>
+                  </div>
+                </li>
+              </ul>
+            </div>
+        </div>
+      </nav>
+    </header>
+

@@ -12,6 +12,7 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 })
 export class AcceuilComponent implements OnInit {
 public username: any;
+spinnerdeconnect:any;
 latitude: number = 12.341731853681724;
 longitude: number = -1.4921732960342848;
 address: any;
@@ -28,6 +29,10 @@ admin: any;
   constructor(private router: Router, private Utilisateurservice: FrontservicesService,private mapsAPILoader: MapsAPILoader, private ngZone: NgZone) { }
 
   ngOnInit(): void {
+    this.Utilisateurservice.loading.subscribe((isloading)=>{
+      this.spinnerdeconnect=isloading;
+      console.log(this.spinnerdeconnect);
+    })
      this.getusername();
      this.mapsAPILoader.load().then(() => {
       this.setCurrentLocation();
@@ -72,68 +77,6 @@ admin: any;
 
     console.log(this.connected)
   }
-
-  deconnexion(){
-
-    Swal.fire({
-      title: 'etes vous sur?',
-      text: 'Voulez vous vous deconnecter?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Oui!',
-      cancelButtonText: 'Non'
-    }).then((result) => {
-      if (result.value) {
-
-        localStorage.removeItem('identifiant');
-
-        Swal.fire(
-          'success!',
-          'success'
-        )
-
-
-   this.router.navigateByUrl('/login');
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire(
-          'Annulé',
-          'error'
-        )
-      }
-    })
-}
-
-deconnexionadmin(){
-
-  Swal.fire({
-    title: 'etes vous sur?',
-    text: 'Voulez vous vous deconnecter?',
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonText: 'Oui!',
-    cancelButtonText: 'Non'
-  }).then((result) => {
-    if (result.value) {
-
-      localStorage.removeItem('admin');
-
-      Swal.fire(
-        'success!',
-        'Le patrimoine a été mis a jour.',
-        'success'
-      )
-
-
- this.router.navigateByUrl('/login');
-    } else if (result.dismiss === Swal.DismissReason.cancel) {
-      Swal.fire(
-        'Annulé',
-        'error'
-      )
-    }
-  })
-
-}
 
   private setCurrentLocation() {
     if ('geolocation' in navigator) {

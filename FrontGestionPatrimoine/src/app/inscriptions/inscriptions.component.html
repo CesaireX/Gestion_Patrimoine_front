@@ -62,9 +62,6 @@
 
           <mat-spinner *ngIf="spinner"></mat-spinner>
 
-          <a [hidden]="!choix" [hidden]="spinner" (click)="activate()" class="voirplus">
-            Personnaliser choix de profession?
-          </a>
           <a [hidden]="!personnalisation" (click)="desactivate()" class="voirplus">
             Choisir la profession?
           </a>
@@ -78,7 +75,7 @@
             <mat-select formControlName="profession">
                 <mat-option value="Enseignant">Enseignant</mat-option>
                 <mat-option value="Entrepreneur">Entrepreneur</mat-option>
-                <mat-option value="Autres">Autres</mat-option>
+                <mat-option (click)="activate()" value="Autres">Autres</mat-option>
             </mat-select>
           </mat-form-field>
 
@@ -121,12 +118,9 @@
         le mot de passe ne correspond pas
         </span>
 
-
-        <div class="container-login100-form-btn">
           <button [disabled]="form.invalid" type="submit" class="login100-form-btn">
             Inscription
           </button>
-        </div>
       </div>
 
         <br>
